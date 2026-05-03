@@ -1,9 +1,9 @@
 site_name: "数学、计算机科学与 AI 百科全书"
-site_url: "https://henryndubuaku.github.io/maths-cs-ai-compendium/"
-site_description: "一本开源的直觉优先教科书，从零开始覆盖数学、计算机科学和人工智能。"
-site_author: "Henry Ndubuaku"
-repo_url: "https://github.com/HenryNdubuaku/maths-cs-ai-compendium"
-repo_name: "HenryNdubuaku/maths-cs-ai-compendium"
+site_url: "https://flykhan.github.io/maths-cs-ai-compendium-zh/"
+site_description: "一本开源的直觉优先教科书，从零开始覆盖数学、计算机科学和人工智能（中文翻译版）。"
+site_author: "Henry Ndubuaku (flykhan 译)"
+repo_url: "https://github.com/flykhan/maths-cs-ai-compendium-zh"
+repo_name: "flykhan/maths-cs-ai-compendium-zh"
 
 docs_dir: docs
 
@@ -64,7 +64,7 @@ plugins:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/HenryNdubuaku/maths-cs-ai-compendium
+      link: https://github.com/flykhan/maths-cs-ai-compendium-zh
 
 nav:
   - 首页: index.md
