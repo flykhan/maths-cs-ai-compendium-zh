@@ -1,0 +1,214 @@
+site_name: "数学、计算机科学与 AI 百科全书"
+site_url: "https://henryndubuaku.github.io/maths-cs-ai-compendium/"
+site_description: "一本开源的直觉优先教科书，从零开始覆盖数学、计算机科学和人工智能。"
+site_author: "Henry Ndubuaku"
+repo_url: "https://github.com/HenryNdubuaku/maths-cs-ai-compendium"
+repo_name: "HenryNdubuaku/maths-cs-ai-compendium"
+
+docs_dir: docs
+
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - toc.follow
+  palette:
+    - scheme: default
+      primary: slate
+      toggle:
+        icon: material/brightness-7
+        name: 切换到深色模式
+    - scheme: slate
+      primary: slate
+      toggle:
+        icon: material/brightness-4
+        name: 切换到浅色模式
+
+markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: math
+          class: arithmatex
+          format: !!python/object/apply:pymdownx.arithmatex.arithmatex_fenced_format
+            kwds:
+              mode: generic
+              tag: div
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+  - tables
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+plugins:
+  - search
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/HenryNdubuaku/maths-cs-ai-compendium
+
+nav:
+  - 首页: index.md
+
+  - 向量:
+    - 向量空间: "chapter 01: vectors/01. vector spaces.md"
+    - 向量性质: "chapter 01: vectors/02. vector properties.md"
+    - 范数与度量: "chapter 01: vectors/03. norms and metrics.md"
+    - 向量积: "chapter 01: vectors/04. products.md"
+    - 基与对偶性: "chapter 01: vectors/05. basis and duality.md"
+
+  - 矩阵:
+    - 矩阵性质: "chapter 02: matrices/01. matrix properties.md"
+    - 矩阵类型: "chapter 02: matrices/02. matrix types.md"
+    - 矩阵运算: "chapter 02: matrices/03. operations.md"
+    - 线性变换: "chapter 02: matrices/04. linear transformations.md"
+    - 矩阵分解: "chapter 02: matrices/05. decompositions.md"
+
+  - 微积分:
+    - 微分: "chapter 03: calculus/01. differential calculus.md"
+    - 积分: "chapter 03: calculus/02. integral calculus.md"
+    - 多元微积分: "chapter 03: calculus/03. multivariate calculus.md"
+    - 函数逼近: "chapter 03: calculus/04. function approximation.md"
+    - 优化: "chapter 03: calculus/05. optimisation.md"
+
+  - 统计学:
+    - 基础: "chapter 04: statistics/01. fundamentals.md"
+    - 统计量: "chapter 04: statistics/02. measures.md"
+    - 抽样: "chapter 04: statistics/03. sampling.md"
+    - 假设检验: "chapter 04: statistics/04. hypothesis testing.md"
+    - 推断: "chapter 04: statistics/05. inference.md"
+
+  - 概率论:
+    - 计数: "chapter 05: probability/01. counting.md"
+    - 概率概念: "chapter 05: probability/02. probability concepts.md"
+    - 分布: "chapter 05: probability/03. distributions.md"
+    - 贝叶斯: "chapter 05: probability/04. bayesian.md"
+    - 信息论: "chapter 05: probability/05. information theory.md"
+
+  - 机器学习:
+    - 经典机器学习: "chapter 06: machine learning/01. classical machine learning.md"
+    - 梯度机器学习: "chapter 06: machine learning/02. gradient machine learning.md"
+    - 深度学习: "chapter 06: machine learning/03. deep learning.md"
+    - 强化学习: "chapter 06: machine learning/04. reinforcement learning.md"
+    - 分布式深度学习: "chapter 06: machine learning/05. distributed deep learning.md"
+
+  - 计算语言学:
+    - 语言学基础: "chapter 07: computational linguistics/01. linguistic foundations.md"
+    - 文本处理与经典 NLP: "chapter 07: computational linguistics/02. text processing and classic NLP.md"
+    - 嵌入与序列模型: "chapter 07: computational linguistics/03. embeddings and sequence models.md"
+    - Transformer 与语言模型: "chapter 07: computational linguistics/04. transformers and language models.md"
+    - 高级文本生成: "chapter 07: computational linguistics/05. advanced text generation.md"
+
+  - 计算机视觉:
+    - 图像基础: "chapter 08: computer vision/01. image fundamentals.md"
+    - 卷积网络: "chapter 08: computer vision/02. convolutional networks.md"
+    - 目标检测与分割: "chapter 08: computer vision/03. object detection and segmentation.md"
+    - ViT 与生成模型: "chapter 08: computer vision/04. vision transformers and generation.md"
+    - 视频与 3D 视觉: "chapter 08: computer vision/05. video and 3D vision.md"
+
+  - 音频与语音:
+    - 数字信号处理: "chapter 09: audio and speech/01. digital signal processing.md"
+    - 自动语音识别: "chapter 09: audio and speech/02. automatic speech recognition.md"
+    - 语音合成: "chapter 09: audio and speech/03. text to speech and voice.md"
+    - 说话人与音频分析: "chapter 09: audio and speech/04. speaker and audio analysis.md"
+    - 源分离与降噪: "chapter 09: audio and speech/05. source separation and noise.md"
+
+  - 多模态学习:
+    - 多模态表征: "chapter 10: multimodal learning/01. multimodal representations.md"
+    - 视觉语言模型: "chapter 10: multimodal learning/02. vision language models.md"
+    - 图像与视频 Token 化: "chapter 10: multimodal learning/03. image and video tokenisation.md"
+    - 跨模态生成: "chapter 10: multimodal learning/04. cross-modal generation.md"
+    - 统一多模态架构: "chapter 10: multimodal learning/05. unified multimodal architectures.md"
+
+  - 自主系统:
+    - 感知: "chapter 11: autonomous systems/01. perception.md"
+    - 机器人学习: "chapter 11: autonomous systems/02. robot learning.md"
+    - 视觉-语言-动作模型: "chapter 11: autonomous systems/03. vision-language-action models.md"
+    - 自动驾驶: "chapter 11: autonomous systems/04. self-driving.md"
+    - 太空与极端机器人: "chapter 11: autonomous systems/05. space and extreme robotics.md"
+
+  - 图神经网络:
+    - 几何深度学习: "chapter 12: graph neural networks/01. geometric deep learning.md"
+    - 图论: "chapter 12: graph neural networks/02. graph theory.md"
+    - 图神经网络: "chapter 12: graph neural networks/03. graph neural networks.md"
+    - 图注意力网络: "chapter 12: graph neural networks/04. graph attention networks.md"
+    - 3D 图网络: "chapter 12: graph neural networks/05. 3d graph networks.md"
+
+  - 计算机与操作系统:
+    - 离散数学: "chapter 13: computing and OS/01. discrete maths.md"
+    - 计算机体系结构: "chapter 13: computing and OS/02. computer architecture.md"
+    - 操作系统: "chapter 13: computing and OS/03. operating systems.md"
+    - 并发与并行: "chapter 13: computing and OS/04. concurrency and parallelism.md"
+    - 编程语言: "chapter 13: computing and OS/05. programming languages.md"
+
+  - 数据结构与算法:
+    - 基础: "chapter 14: data structures and algorithms/00. foundations.md"
+    - 数组与哈希: "chapter 14: data structures and algorithms/01. arrays and hashing.md"
+    - 链表、栈与队列: "chapter 14: data structures and algorithms/02. linked lists, stacks, and queues.md"
+    - 树: "chapter 14: data structures and algorithms/03. trees.md"
+    - 图: "chapter 14: data structures and algorithms/04. graphs.md"
+    - 排序与搜索: "chapter 14: data structures and algorithms/05. sorting and search.md"
+
+  - 生产级软件工程:
+    - Linux 与命令行: "chapter 15: production software engineering/01. linux and CMD.md"
+    - Git 与仓库管理: "chapter 15: production software engineering/02. git and repository management.md"
+    - 代码设计: "chapter 15: production software engineering/03. codebase design.md"
+    - 测试与质量保障: "chapter 15: production software engineering/04. testing and quality assurance.md"
+    - 部署与 DevOps: "chapter 15: production software engineering/05. deployment and devops.md"
+
+  - SIMD 与 GPU 编程:
+    - 为什么是 C++ 及 ML 框架原理: "chapter 16: SIMD and GPU programming/00. why C++ and how ML frameworks work.md"
+    - 硬件基础: "chapter 16: SIMD and GPU programming/01. hardware fundamentals.md"
+    - ARM 与 NEON: "chapter 16: SIMD and GPU programming/02. ARM and NEON.md"
+    - x86 与 AVX: "chapter 16: SIMD and GPU programming/03. x86 and AVX.md"
+    - GPU 架构与 CUDA: "chapter 16: SIMD and GPU programming/04. GPU architecture and CUDA.md"
+    - Triton、TPU 与 Pallas: "chapter 16: SIMD and GPU programming/05. triton, TPUs and pallax.md"
+    - RISC-V 与嵌入式系统: "chapter 16: SIMD and GPU programming/06. RISC-V and embedded systems.md"
+    - Vulkan Compute 与跨平台 GPU: "chapter 16: SIMD and GPU programming/07. vulkan compute and cross-platform GPU.md"
+
+  - AI 推理:
+    - 量化: "chapter 17: AI inference/01. quantisation.md"
+    - 高效架构: "chapter 17: AI inference/02. efficient architectures.md"
+    - 服务与批处理: "chapter 17: AI inference/03. serving and batching.md"
+    - 边缘推理: "chapter 17: AI inference/04. edge inference.md"
+    - 扩缩与部署: "chapter 17: AI inference/05. scaling and deployment.md"
+
+  - ML 系统设计:
+    - 系统设计基础: "chapter 18: ML systems design/01. systems design fundamentals.md"
+    - 云计算: "chapter 18: ML systems design/02. cloud computing.md"
+    - 大规模基础设施: "chapter 18: ML systems design/03. large scale infrastructure.md"
+    - ML 系统设计: "chapter 18: ML systems design/04. ML systems design.md"
+    - ML 设计案例: "chapter 18: ML systems design/05. ML design examples.md"
+
+  - 应用 AI:
+    - AI 金融: "chapter 19: applied AI/01. AI for finance.md"
+    - 蛋白质设计: "chapter 19: applied AI/02. protein design.md"
+    - 药物发现: "chapter 19: applied AI/03. drug discovery.md"
+    - 智能体系统: "chapter 19: applied AI/04. agentic systems.md"
+    - 医疗健康: "chapter 19: applied AI/05. healthcare.md"
+
+  - 前沿 AI:
+    - 量子机器学习: "chapter 20: bleeding edge AI/01. quantum machine learning.md"
+    - 神经形态计算: "chapter 20: bleeding edge AI/02. neuromorphic computing.md"
+    - 太空数据中心: "chapter 20: bleeding edge AI/03. datacentres in space.md"
+    - 去中心化 AI: "chapter 20: bleeding edge AI/04. decentralised AI.md"
+    - 脑机接口: "chapter 20: bleeding edge AI/05. brain machine interfaces.md"
