@@ -1,39 +1,52 @@
 # 部署说明 — mathai.example.com
 
-本仓库的线上站点不再使用 GitHub Pages，而是由 GitHub Actions 构建后 rsync 到自有服务器。
+线上站点不再使用 GitHub Pages，也不用 GitHub Actions 自动部署：**内容很少变化**，
+整站被打包成 Docker 镜像 `flykhan/mathai`，在服务器上以容器运行，宿主 nginx 只负责 TLS 和反向代理。
 
 | 项目 | 值 |
 |---|---|
 | 站点地址 | https://mathai.example.com |
-| 服务器 | `38.55.97.65`（root，SSH 端口 `2222`） |
-| 站点目录 | `/var/www/mathai.example.com` |
-| nginx 配置 | `/etc/nginx/sites-available/mathai.example.com` → `sites-enabled/` 软链 |
+| 镜像 | `flykhan/mathai:latest`（Docker Hub） |
+| 容器名 / 端口 | `mathai`，监听 `127.0.0.1:19080` → 容器 80 |
+| 反向代理 | `/etc/nginx/sites-available/mathai.example.com` → `sites-enabled/` 软链 |
 | 证书 | `/etc/nginx/cert/cert.crt` + `private.key`（acme.sh 签发的 `*.example.com` 泛域名证书，自动续期） |
-| 自动部署 | `.github/workflows/deploy.yml`：push 到 `master` 或手动触发 |
+| 容器内配置 | `deploy/nginx-container.conf` |
+| 宿主机 vhost | `deploy/nginx-mathai.example.com.conf` |
 
-## 流程
+## 镜像结构
 
-1. GitHub Actions 安装 `mkdocs-material`，执行 `mkdocs build --clean`；
-2. 用仓库 Secret 中的专用部署私钥 SSH 到服务器；
-3. `rsync -az --delete site/ root@38.55.97.65:/var/www/mathai.example.com/`。
+`Dockerfile` 是多阶段构建，直接在本仓库根目录构建即可，无需在宿主机安装 Python/mkdocs：
 
-## 仓库 Secrets
+1. `python:3.12-slim` 阶段：`pip install -r requirements.txt`，再 `mkdocs build --clean`；
+2. `nginx:alpine` 阶段：把生成的 `site/` 拷到 `/usr/share/nginx/html`，套用 `deploy/nginx-container.conf`。
 
-| Secret | 用途 |
-|---|---|
-| `MATHAI_SSH_KEY` | 专用部署私钥（`gh-actions-deploy@mathai.example.com`），公钥在服务器 `/root/.ssh/authorized_keys` |
-| `MATHAI_SSH_HOST` | `38.55.97.65` |
-| `MATHAI_SSH_PORT` | `2222` |
-| `MATHAI_SSH_USER` | `root` |
-| `MATHAI_KNOWN_HOSTS` | 服务器 2222 端口的 ED25519 host key，防止中间人 |
-
-部署服务器若要重建，照 `nginx-mathai.example.com.conf` 放好 vhost、建好站点目录，再把新的公钥加进
-`/root/.ssh/authorized_keys`，即可重新接管自动部署。
-
-## 手动部署（本地）
+## 更新内容
 
 ```bash
-pip install mkdocs-material mkdocs
-mkdocs build --clean
-rsync -az --delete -e 'ssh -p 2222' site/ root@38.55.97.65:/var/www/mathai.example.com/
+# 1) 构建（或直接拉取 CI 之外新发布的镜像）
+docker build -t flykhan/mathai:latest .
+
+# 2) 需要发布给别人时推上去
+docker push flykhan/mathai:latest
+
+# 3) 服务器上重建容器
+ssh -p 2222 root@example.com
+docker pull flykhan/mathai:latest
+docker rm -f mathai
+docker run -d --name mathai --restart unless-stopped \
+  -p 127.0.0.1:19080:80 flykhan/mathai:latest
+```
+
+宿主 nginx 不需要 reload（只改了容器内容时）。
+
+## 首次部署（服务器）
+
+```bash
+docker run -d --name mathai --restart unless-stopped \
+  -p 127.0.0.1:19080:80 flykhan/mathai:latest
+
+# vhost 从「直接 root 到静态目录」改为「proxy_pass 到 127.0.0.1:19080」
+cp deploy/nginx-mathai.example.com.conf /etc/nginx/sites-available/mathai.example.com
+ln -sf /etc/nginx/sites-available/mathai.example.com /etc/nginx/sites-enabled/mathai.example.com
+nginx -t && nginx -s reload
 ```
