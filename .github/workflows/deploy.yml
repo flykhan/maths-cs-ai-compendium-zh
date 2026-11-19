@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy to mathai.example.com
 
 on:
   push:
@@ -7,11 +7,9 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
+  group: deploy-mathai
   cancel-in-progress: true
 
 jobs:
@@ -26,16 +24,28 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: |
-          pip install mkdocs-material mkdocs
+        run: pip install mkdocs-material mkdocs
 
       - name: Build site
-        run: mkdocs build
+        run: mkdocs build --clean
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: site
+      - name: Set up SSH
+        env:
+          SSH_KEY: ${{ secrets.MATHAI_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.MATHAI_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
 
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+      - name: Deploy via rsync
+        env:
+          SSH_HOST: ${{ secrets.MATHAI_SSH_HOST }}
+          SSH_PORT: ${{ secrets.MATHAI_SSH_PORT }}
+          SSH_USER: ${{ secrets.MATHAI_SSH_USER }}
+        run: |
+          rsync -az --delete --stats \
+            -e "ssh -p ${SSH_PORT} -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes -o BatchMode=yes" \
+            site/ "${SSH_USER}@${SSH_HOST}:/var/www/mathai.example.com/"

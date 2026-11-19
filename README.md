@@ -2,7 +2,7 @@
 
 <img src="images/logo.png" alt="Logo" style="border-radius: 30px; width: 100%;">
 
-**在线阅读**: [henryndubuaku.github.io/maths-cs-ai-compendium](https://henryndubuaku.github.io/maths-cs-ai-compendium/)
+**在线阅读**: [mathai.example.com](https://mathai.example.com/)（原版英文：[henryndubuaku.github.io/maths-cs-ai-compendium](https://henryndubuaku.github.io/maths-cs-ai-compendium/)）
 
 ## 概述
 大多数教科书将好的思想埋没在密集的符号之下，跳过直觉，假设你已经掌握了一半的内容，并且在人工智能等快速发展的领域很快过时。这是一本开放、非传统的教科书，从零开始涵盖数学、计算机科学和人工智能。为那些希望深入理解知识、而不仅仅是为了通过考试或面试的好奇实践者而编写。
